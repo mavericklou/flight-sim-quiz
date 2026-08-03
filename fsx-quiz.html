@@ -2,7 +2,8 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<title>模拟飞行 · 初级题库200题练习</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模拟飞行 · 初级题库355题交互练习</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -226,11 +227,51 @@ h1 {
   padding-top: 20px;
   border-top: 1px solid #ddd;
 }
+/* ===== 手机端适配（单列 + 大字体 + 大按钮） ===== */
+@media (max-width: 900px) {
+  body {
+    padding: 16px 12px 40px 12px;
+    font-size: 22px;
+  }
+  .container { max-width: 100%; }
+  h1 { font-size: 26px; line-height: 1.4; }
+  .subtitle { font-size: 16px; line-height: 1.6; }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .q-card { padding: 20px; border-radius: 16px; }
+  .q-text { font-size: 24px; min-height: 0; line-height: 1.7; }
+  .q-num { width: 42px; height: 42px; line-height: 42px; font-size: 20px; }
+  .q-cat { font-size: 16px; padding: 3px 14px; }
+  .opt { font-size: 21px; padding: 13px 16px; margin: 6px 0; line-height: 1.5; }
+  .ans-btn { font-size: 22px; padding: 15px 0; width: 100%; border-radius: 12px; }
+  .ans-reveal { font-size: 20px; padding: 12px 16px; line-height: 1.6; }
+  .reset-btn { font-size: 19px; padding: 14px 20px; width: 100%; }
+  .q-status { font-size: 17px; }
+  .top-bar { margin-bottom: 16px; }
+  .history-box { padding: 14px 12px; overflow-x: auto; }
+  .history-box h3 { font-size: 17px; }
+  .history-box table { font-size: 13px; min-width: 480px; }
+  .history-box th, .history-box td { padding: 6px 8px; }
+  .bottom-reset { margin: 20px 0; }
+  .footer { font-size: 13px; margin-top: 24px; }
+  #score-float {
+    right: 10px;
+    bottom: 10px;
+    padding: 10px 16px;
+    min-width: 130px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+  #score-float .score-num { font-size: 26px; }
+  #score-float .score-detail { font-size: 12px; }
+}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>模拟飞行 · 初级题库200题练习</h1>
+<h1>模拟飞行 · 初级题库355题交互练习</h1>
 <div class="subtitle">汇总：基础题库（小学）+ 中级/182题库初级题 + 练习90题 + 考纲薄弱领域补充38题 | 已排除争议题 | 先选答案，再点「显示答案」判定对错</div>
 <div class="top-bar">
   <button class="reset-btn" onclick="clearProgress()">🗑 清除进度重新开始</button>
