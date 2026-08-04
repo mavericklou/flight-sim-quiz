@@ -83,7 +83,7 @@ base_keep = []
 for d in base:
     if any(kw in d['q'] for kw in base_doubt_kws):
         continue
-    base_keep.append({'src': '基础题库', 'diff': '初级', 'q': d['q'], 'opts': d['opts'], 'ans': d['correct']})
+    base_keep.append({'srcs': ['基础题库'], 'diff': '初级', 'q': d['q'], 'opts': d['opts'], 'ans': d['correct']})
 
 # 中级题库：初级筛选 + 排除争议
 mid_keep = []
@@ -92,9 +92,9 @@ for d in mid:
     if any(kw in d['q'] for kw in mid_doubt_kws):
         continue
     if is_advanced(d['q']):
-        mid_adv.append({'src': '中级题库', 'diff': '中级', 'q': d['q'], 'opts': d['opts'], 'ans': d['correct']})
+        mid_adv.append({'srcs': ['中级题库'], 'diff': '中级', 'q': d['q'], 'opts': d['opts'], 'ans': d['correct']})
     else:
-        mid_keep.append({'src': '中级题库', 'diff': '初级', 'q': d['q'], 'opts': d['opts'], 'ans': d['correct']})
+        mid_keep.append({'srcs': ['中级题库'], 'diff': '初级', 'q': d['q'], 'opts': d['opts'], 'ans': d['correct']})
 
 # 182题库：初级筛选 + 排除争议
 q182_keep = []
@@ -103,12 +103,12 @@ for i in items182:
     if int(i['num']) in q182_doubt_nums:
         continue
     if is_advanced(i['q']):
-        q182_adv.append({'src': '182题库', 'diff': '中级', 'q': i['q'], 'opts': i['opts'], 'ans': i['ans']})
+        q182_adv.append({'srcs': ['182题库'], 'diff': '中级', 'q': i['q'], 'opts': i['opts'], 'ans': i['ans']})
     else:
-        q182_keep.append({'src': '182题库', 'diff': '初级', 'q': i['q'], 'opts': i['opts'], 'ans': i['ans']})
+        q182_keep.append({'srcs': ['182题库'], 'diff': '初级', 'q': i['q'], 'opts': i['opts'], 'ans': i['ans']})
 
 # 90题练习：全部保留（初级）
-p90_keep = [{'src': '练习90题', 'diff': '初级', 'q': q, 'opts': opts, 'ans': opts[ans_idx]} for cat, q, opts, ans_idx in practice90]
+p90_keep = [{'srcs': ['练习90题'], 'diff': '初级', 'q': q, 'opts': opts, 'ans': opts[ans_idx]} for cat, q, opts, ans_idx in practice90]
 
 print(f"\n基础题库(初级): {len(base_keep)}")
 print(f"中级题库 初级: {len(mid_keep)}, 中级: {len(mid_adv)}")
@@ -128,6 +128,13 @@ all_items = []
 for item in base_keep + mid_keep + q182_keep + p90_keep + mid_adv + q182_adv:
     n = norm(item['q'])
     if n in seen:
+        # 重复题：合并来源标记（不丢弃，保证每个来源都能筛选到）
+        for kept in all_items:
+            if norm(kept['q']) == n:
+                for s in item['srcs']:
+                    if s not in kept['srcs']:
+                        kept['srcs'].append(s)
+                break
         continue
     seen.add(n)
     all_items.append(item)
@@ -197,7 +204,7 @@ for q, opts, ans_idx in [(w[1], w[2], w[3]) for w in weak_fill]:
         print(f"  跳过重复: {q[:35]}")
         continue
     used_norms.add(n)
-    all_items.append({'src': '考纲补充', 'diff': '初级', 'q': q, 'opts': opts, 'ans': opts[ans_idx]})
+    all_items.append({'srcs': ['考纲补充'], 'diff': '初级', 'q': q, 'opts': opts, 'ans': opts[ans_idx]})
     added_weak += 1
 print(f"考纲补充新增: {added_weak} 题")
 
@@ -622,8 +629,9 @@ h1 {
 # 动态生成来源选项
 src_set = []
 for item in all_items:
-    if item['src'] not in src_set:
-        src_set.append(item['src'])
+    for s in item['srcs']:
+        if s not in src_set:
+            src_set.append(s)
 for src in src_set:
     html_parts.append(f'    <option value="{src}">{src}</option>\n')
 html_parts.append('''  </select>
@@ -645,7 +653,9 @@ for i, item in enumerate(shuffled, 1):
     q = item['q']
     opts = item['opts']
     ans_text = item['ans']
-    src = item['src']
+    srcs = item['srcs']
+    src_label = '/'.join(srcs)
+    srcs_attr = ','.join(srcs)
     # 找答案在选项中的位置
     ans_idx = -1
     for j, o in enumerate(opts):
@@ -661,9 +671,9 @@ for i, item in enumerate(shuffled, 1):
     if ans_idx == -1:
         print(f"  ⚠️ 答案未匹配选项: {q[:40]} | ans={ans_text[:20]}")
         ans_idx = 0
-    html_parts.append(f'<div class="q-card" data-idx="{i-1}" data-diff="{item["diff"]}" data-answer="{escape(opts[ans_idx], quote=True)}" data-letter="{chr(65+ans_idx)}">')
+    html_parts.append(f'<div class="q-card" data-idx="{i-1}" data-diff="{item["diff"]}" data-srcs="{srcs_attr}" data-answer="{escape(opts[ans_idx], quote=True)}" data-letter="{chr(65+ans_idx)}">')
     diff_tag = '<span class="q-diff mid">中级</span>' if item['diff'] == '中级' else '<span class="q-diff">初级</span>'
-    html_parts.append(f'<div class="q-top"><span class="q-num">{i}</span><span class="q-cat">{src}</span>{diff_tag}<span class="q-status"></span></div>')
+    html_parts.append(f'<div class="q-top"><span class="q-num">{i}</span><span class="q-cat">{src_label}</span>{diff_tag}<span class="q-status"></span></div>')
     html_parts.append(f'<div class="q-text">{q}</div>')
     for j, opt in enumerate(opts):
         html_parts.append(f'<div class="opt" data-correct="{"true" if j == ans_idx else "false"}" onclick="selectOpt(this)">{chr(65+j)}. {opt}</div>')
@@ -721,9 +731,9 @@ function applySourceFilter() {
   var cards = document.querySelectorAll('.q-card');
   var visible = 0;
   cards.forEach(function(card) {
-    var src = card.querySelector('.q-cat').textContent;
+    var cardSrcs = (card.getAttribute('data-srcs') || '').split(',');
     var cardDiff = card.getAttribute('data-diff');
-    var show = (sel === '全部' || src === sel) && (diff === '全部' || cardDiff === diff);
+    var show = (sel === '全部' || cardSrcs.indexOf(sel) >= 0) && (diff === '全部' || cardDiff === diff);
     if (show) {
       card.style.display = '';
       visible++;
@@ -995,24 +1005,27 @@ function clearAndShuffle() {
   try {
     hist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
   } catch (e) {}
-  var wrong = gradedCount - correctCount;
-  var pct = gradedCount > 0 ? Math.round(correctCount / gradedCount * 100) : 0;
-  var now = new Date();
-  function pad(n) { return n < 10 ? '0' + n : '' + n; }
-  hist.push({
-    time: now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()),
-    total: (function() {
-      var v = 0;
-      document.querySelectorAll('.q-card').forEach(function(c) {
-        if (c.style.display !== 'none') v++;
-      });
-      return v;
-    })(),
-    graded: gradedCount,
-    correct: correctCount,
-    wrong: wrong,
-    pct: pct
-  });
+  // 只在已答题（做过至少1题）时才记录历史
+  if (gradedCount > 0) {
+    var wrong = gradedCount - correctCount;
+    var pct = gradedCount > 0 ? Math.round(correctCount / gradedCount * 100) : 0;
+    var now = new Date();
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    hist.push({
+      time: now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()),
+      total: (function() {
+        var v = 0;
+        document.querySelectorAll('.q-card').forEach(function(c) {
+          if (c.style.display !== 'none') v++;
+        });
+        return v;
+      })(),
+      graded: gradedCount,
+      correct: correctCount,
+      wrong: wrong,
+      pct: pct
+    });
+  }
   var order = [];
   for (var i = 0; i < document.querySelectorAll('.q-card').length; i++) order.push(i);
   shuffleArray(order);
