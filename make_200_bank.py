@@ -78,39 +78,43 @@ advanced_kws = ['磁差', '偏流', '下降率', '风三角形', '航行速度�
 def is_advanced(q):
     return any(kw in q for kw in advanced_kws)
 
-# 基础题库：全部保留（小学组），只排除争议
+# 基础题库：全部保留（小学组），只排除争议，难度=初级
 base_keep = []
 for d in base:
     if any(kw in d['q'] for kw in base_doubt_kws):
         continue
-    base_keep.append({'src': '基础题库', 'q': d['q'], 'opts': d['opts'], 'ans': d['correct']})
+    base_keep.append({'src': '基础题库', 'diff': '初级', 'q': d['q'], 'opts': d['opts'], 'ans': d['correct']})
 
 # 中级题库：初级筛选 + 排除争议
 mid_keep = []
+mid_adv = []  # 中级难度部分
 for d in mid:
-    if is_advanced(d['q']):
-        continue
     if any(kw in d['q'] for kw in mid_doubt_kws):
         continue
-    mid_keep.append({'src': '中级题库', 'q': d['q'], 'opts': d['opts'], 'ans': d['correct']})
+    if is_advanced(d['q']):
+        mid_adv.append({'src': '中级题库', 'diff': '中级', 'q': d['q'], 'opts': d['opts'], 'ans': d['correct']})
+    else:
+        mid_keep.append({'src': '中级题库', 'diff': '初级', 'q': d['q'], 'opts': d['opts'], 'ans': d['correct']})
 
 # 182题库：初级筛选 + 排除争议
 q182_keep = []
+q182_adv = []  # 中级难度部分
 for i in items182:
-    if is_advanced(i['q']):
-        continue
     if int(i['num']) in q182_doubt_nums:
         continue
-    q182_keep.append({'src': f'182题库', 'q': i['q'], 'opts': i['opts'], 'ans': i['ans']})
+    if is_advanced(i['q']):
+        q182_adv.append({'src': '182题库', 'diff': '中级', 'q': i['q'], 'opts': i['opts'], 'ans': i['ans']})
+    else:
+        q182_keep.append({'src': '182题库', 'diff': '初级', 'q': i['q'], 'opts': i['opts'], 'ans': i['ans']})
 
-# 90题练习：全部保留
-p90_keep = [{'src': '练习90题', 'q': q, 'opts': opts, 'ans': opts[ans_idx]} for cat, q, opts, ans_idx in practice90]
+# 90题练习：全部保留（初级）
+p90_keep = [{'src': '练习90题', 'diff': '初级', 'q': q, 'opts': opts, 'ans': opts[ans_idx]} for cat, q, opts, ans_idx in practice90]
 
-print(f"\n基础题库保留: {len(base_keep)}")
-print(f"中级题库保留: {len(mid_keep)}")
-print(f"182题库保留: {len(q182_keep)}")
-print(f"练习90题保留: {len(p90_keep)}")
-print(f"去重前合计: {len(base_keep)+len(mid_keep)+len(q182_keep)+len(p90_keep)}")
+print(f"\n基础题库(初级): {len(base_keep)}")
+print(f"中级题库 初级: {len(mid_keep)}, 中级: {len(mid_adv)}")
+print(f"182题库 初级: {len(q182_keep)}, 中级: {len(q182_adv)}")
+print(f"练习90题(初级): {len(p90_keep)}")
+print(f"去重前合计: {len(base_keep)+len(mid_keep)+len(mid_adv)+len(q182_keep)+len(q182_adv)+len(p90_keep)}")
 
 # ========== 4. 去重（标准化） ==========
 def norm(q):
@@ -121,7 +125,7 @@ def norm(q):
 
 seen = set()
 all_items = []
-for item in base_keep + mid_keep + q182_keep + p90_keep:
+for item in base_keep + mid_keep + q182_keep + p90_keep + mid_adv + q182_adv:
     n = norm(item['q'])
     if n in seen:
         continue
@@ -193,7 +197,7 @@ for q, opts, ans_idx in [(w[1], w[2], w[3]) for w in weak_fill]:
         print(f"  跳过重复: {q[:35]}")
         continue
     used_norms.add(n)
-    all_items.append({'src': '考纲补充', 'q': q, 'opts': opts, 'ans': opts[ans_idx]})
+    all_items.append({'src': '考纲补充', 'diff': '初级', 'q': q, 'opts': opts, 'ans': opts[ans_idx]})
     added_weak += 1
 print(f"考纲补充新增: {added_weak} 题")
 
@@ -312,7 +316,7 @@ html_parts.append('''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>模拟飞行 · 初级题库297题交互练习</title>
+<title>模拟飞行 · 初级中级题库372题交互练习</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -431,6 +435,21 @@ h1 {
 }
 .q-status.right { color: #27ae60; }
 .q-status.wrong { color: #e74c3c; }
+.q-diff {
+  font-size: 13px;
+  color: #27ae60;
+  background: #e8f8e8;
+  border: 1px solid #27ae60;
+  padding: 1px 10px;
+  border-radius: 12px;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+.q-diff.mid {
+  color: #e67e22;
+  background: #fef5e7;
+  border-color: #e67e22;
+}
 .ans-area {
   margin-top: auto;
   padding-top: 12px;
@@ -594,7 +613,7 @@ h1 {
 </head>
 <body>
 <div class="container">
-<h1>模拟飞行 · 初级题库297题交互练习</h1>
+<h1>模拟飞行 · 初级中级题库372题交互练习</h1>
 <div class="subtitle">汇总：基础题库（小学）+ 中级/182题库初级题 + 练习90题 + 考纲薄弱领域补充38题 | 已排除争议题 | 先选答案，再点「显示答案」判定对错</div>
 <div class="top-bar">
   <select id="source-select" class="source-select" onchange="changeSource(this)">
@@ -608,6 +627,11 @@ for item in all_items:
 for src in src_set:
     html_parts.append(f'    <option value="{src}">{src}</option>\n')
 html_parts.append('''  </select>
+  <select id="diff-select" class="source-select" onchange="changeDiff(this)">
+    <option value="全部">🎯 全部难度</option>
+    <option value="初级">初级</option>
+    <option value="中级">中级</option>
+  </select>
   <button class="reset-btn" onclick="clearAndShuffle()">🗑 清除进度重新开始</button>
 </div>
 <div class="history-box">
@@ -637,8 +661,9 @@ for i, item in enumerate(shuffled, 1):
     if ans_idx == -1:
         print(f"  ⚠️ 答案未匹配选项: {q[:40]} | ans={ans_text[:20]}")
         ans_idx = 0
-    html_parts.append(f'<div class="q-card" data-idx="{i-1}" data-answer="{escape(opts[ans_idx], quote=True)}" data-letter="{chr(65+ans_idx)}">')
-    html_parts.append(f'<div class="q-top"><span class="q-num">{i}</span><span class="q-cat">{src}</span><span class="q-status"></span></div>')
+    html_parts.append(f'<div class="q-card" data-idx="{i-1}" data-diff="{item["diff"]}" data-answer="{escape(opts[ans_idx], quote=True)}" data-letter="{chr(65+ans_idx)}">')
+    diff_tag = '<span class="q-diff mid">中级</span>' if item['diff'] == '中级' else '<span class="q-diff">初级</span>'
+    html_parts.append(f'<div class="q-top"><span class="q-num">{i}</span><span class="q-cat">{src}</span>{diff_tag}<span class="q-status"></span></div>')
     html_parts.append(f'<div class="q-text">{q}</div>')
     for j, opt in enumerate(opts):
         html_parts.append(f'<div class="opt" data-correct="{"true" if j == ans_idx else "false"}" onclick="selectOpt(this)">{chr(65+j)}. {opt}</div>')
@@ -669,9 +694,14 @@ var correctCount = 0;
 var STORE_KEY = 'fsx_progress_v1';
 var HIST_KEY = 'fsx_history_v1';
 var SOURCE_KEY = 'fsx_source_v1';
+var DIFF_KEY = 'fsx_diff_v1';
 
 function getSelectedSource() {
   try { return localStorage.getItem(SOURCE_KEY) || '全部'; } catch (e) { return '全部'; }
+}
+
+function getSelectedDiff() {
+  try { return localStorage.getItem(DIFF_KEY) || '全部'; } catch (e) { return '全部'; }
 }
 
 function changeSource(sel) {
@@ -679,14 +709,22 @@ function changeSource(sel) {
   location.reload();
 }
 
-// 按来源过滤卡片，返回可见题数
+function changeDiff(sel) {
+  try { localStorage.setItem(DIFF_KEY, sel.value); } catch (e) {}
+  location.reload();
+}
+
+// 按来源+难度联合过滤卡片，返回可见题数
 function applySourceFilter() {
   var sel = getSelectedSource();
+  var diff = getSelectedDiff();
   var cards = document.querySelectorAll('.q-card');
   var visible = 0;
   cards.forEach(function(card) {
     var src = card.querySelector('.q-cat').textContent;
-    if (sel === '全部' || src === sel) {
+    var cardDiff = card.getAttribute('data-diff');
+    var show = (sel === '全部' || src === sel) && (diff === '全部' || cardDiff === diff);
+    if (show) {
       card.style.display = '';
       visible++;
     } else {
@@ -707,6 +745,8 @@ function applySourceFilter() {
 function initSourceSelect() {
   var sel = document.getElementById('source-select');
   if (sel) sel.value = getSelectedSource();
+  var diff = document.getElementById('diff-select');
+  if (diff) diff.value = getSelectedDiff();
 }
 
 function selectOpt(opt) {
