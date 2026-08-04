@@ -503,6 +503,20 @@ h1 {
   transition: background 0.15s;
 }
 .reset-btn:hover { background: #c73550; }
+.source-select {
+  font-family: inherit;
+  font-size: 17px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #0f3460;
+  background: #fff;
+  color: #16213e;
+  cursor: pointer;
+  flex: 1;
+  min-width: 200px;
+  max-width: 320px;
+}
+.source-select:focus { outline: none; border-color: #e94560; }
 .history-box {
   background: #fff;
   border-radius: 14px;
@@ -583,6 +597,17 @@ h1 {
 <h1>模拟飞行 · 初级题库297题交互练习</h1>
 <div class="subtitle">汇总：基础题库（小学）+ 中级/182题库初级题 + 练习90题 + 考纲薄弱领域补充38题 | 已排除争议题 | 先选答案，再点「显示答案」判定对错</div>
 <div class="top-bar">
+  <select id="source-select" class="source-select" onchange="changeSource(this)">
+    <option value="全部">📚 全部题目</option>
+''')
+# 动态生成来源选项
+src_set = []
+for item in all_items:
+    if item['src'] not in src_set:
+        src_set.append(item['src'])
+for src in src_set:
+    html_parts.append(f'    <option value="{src}">{src}</option>\n')
+html_parts.append('''  </select>
   <button class="reset-btn" onclick="clearAndShuffle()">🗑 清除进度重新开始</button>
 </div>
 <div class="history-box">
@@ -643,6 +668,46 @@ var gradedCount = 0;
 var correctCount = 0;
 var STORE_KEY = 'fsx_progress_v1';
 var HIST_KEY = 'fsx_history_v1';
+var SOURCE_KEY = 'fsx_source_v1';
+
+function getSelectedSource() {
+  try { return localStorage.getItem(SOURCE_KEY) || '全部'; } catch (e) { return '全部'; }
+}
+
+function changeSource(sel) {
+  try { localStorage.setItem(SOURCE_KEY, sel.value); } catch (e) {}
+  location.reload();
+}
+
+// 按来源过滤卡片，返回可见题数
+function applySourceFilter() {
+  var sel = getSelectedSource();
+  var cards = document.querySelectorAll('.q-card');
+  var visible = 0;
+  cards.forEach(function(card) {
+    var src = card.querySelector('.q-cat').textContent;
+    if (sel === '全部' || src === sel) {
+      card.style.display = '';
+      visible++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  // 重新编号
+  var n = 0;
+  cards.forEach(function(card) {
+    if (card.style.display !== 'none') {
+      n++;
+      card.querySelector('.q-num').textContent = n;
+    }
+  });
+  return visible;
+}
+
+function initSourceSelect() {
+  var sel = document.getElementById('source-select');
+  if (sel) sel.value = getSelectedSource();
+}
 
 function selectOpt(opt) {
   var card = opt.closest('.q-card');
@@ -722,7 +787,12 @@ function updateScore() {
   document.querySelector('#score-float .score-num').textContent = pct + '%';
   document.getElementById('score-correct').textContent = correctCount;
   document.getElementById('score-graded').textContent = gradedCount;
-  document.getElementById('score-total').textContent = document.querySelectorAll('.q-card').length;
+  // 只统计可见卡片
+  var visible = 0;
+  document.querySelectorAll('.q-card').forEach(function(c) {
+    if (c.style.display !== 'none') visible++;
+  });
+  document.getElementById('score-total').textContent = visible;
 }
 
 function saveProgress() {
@@ -748,6 +818,7 @@ function loadProgress() {
   if (!data || !data.answers) return;
 
   document.querySelectorAll('.q-card').forEach(function(card) {
+    if (card.style.display === 'none') return; // 跳过被来源过滤隐藏的题
     var idx = card.getAttribute('data-idx');
     var st = data.answers[idx];
     if (!st) return;
@@ -890,7 +961,13 @@ function clearAndShuffle() {
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   hist.push({
     time: now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()),
-    total: document.querySelectorAll('.q-card').length,
+    total: (function() {
+      var v = 0;
+      document.querySelectorAll('.q-card').forEach(function(c) {
+        if (c.style.display !== 'none') v++;
+      });
+      return v;
+    })(),
     graded: gradedCount,
     correct: correctCount,
     wrong: wrong,
@@ -918,8 +995,11 @@ window.addEventListener('scroll', function() {
 });
 
 renderHistory();
-applyOrder();   // 先按保存的顺序排卡片
-loadProgress(); // 再恢复进度（按 data-idx 映射，顺序无关）
+initSourceSelect();
+applyOrder();        // 先按保存的顺序排卡片
+applySourceFilter(); // 再按来源过滤（隐藏其他来源的题）
+loadProgress();      // 恢复进度（按 data-idx 映射，只统计可见题）
+updateScore();       // 确保浮动窗总数正确（无进度数据时也要刷新）
 </script>
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
