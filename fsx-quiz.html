@@ -645,24 +645,27 @@ function clearAndShuffle() {
   try {
     hist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]');
   } catch (e) {}
-  var wrong = gradedCount - correctCount;
-  var pct = gradedCount > 0 ? Math.round(correctCount / gradedCount * 100) : 0;
-  var now = new Date();
-  function pad(n) { return n < 10 ? '0' + n : '' + n; }
-  hist.push({
-    time: now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()),
-    total: (function() {
-      var v = 0;
-      document.querySelectorAll('.q-card').forEach(function(c) {
-        if (c.style.display !== 'none') v++;
-      });
-      return v;
-    })(),
-    graded: gradedCount,
-    correct: correctCount,
-    wrong: wrong,
-    pct: pct
-  });
+  // 只在已答题（做过至少1题）时才记录历史
+  if (gradedCount > 0) {
+    var wrong = gradedCount - correctCount;
+    var pct = gradedCount > 0 ? Math.round(correctCount / gradedCount * 100) : 0;
+    var now = new Date();
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    hist.push({
+      time: now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()),
+      total: (function() {
+        var v = 0;
+        document.querySelectorAll('.q-card').forEach(function(c) {
+          if (c.style.display !== 'none') v++;
+        });
+        return v;
+      })(),
+      graded: gradedCount,
+      correct: correctCount,
+      wrong: wrong,
+      pct: pct
+    });
+  }
   var order = [];
   for (var i = 0; i < document.querySelectorAll('.q-card').length; i++) order.push(i);
   shuffleArray(order);
