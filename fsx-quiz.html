@@ -3,7 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>模拟飞行 · 初级中级题库372题交互练习</title>
+<title>模拟飞行省赛国赛理论题库_372题在线刷题_航空理论考试</title>
+<meta name="description" content="模拟飞行省赛、国赛理论考试题库，共372题，覆盖基础题库、182题库、中级题库及考纲薄弱领域补充题。在线交互刷题，先选答案再显示答案判定对错，进度自动保存，适合省赛/国赛赛前备考。">
+<meta name="keywords" content="模拟飞行题库,模拟飞行省赛,模拟飞行国赛,模拟飞行理论考试,航空理论题库,模拟飞行刷题,飞行等级考试,省赛理论题,国赛理论题">
+<meta name="author" content="flight-sim-quiz">
+<link rel="canonical" href="https://mavericklou.github.io/flight-sim-quiz/fsx-quiz.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="模拟飞行理论题库">
+<meta property="og:title" content="模拟飞行省赛国赛理论题库_372题在线刷题">
+<meta property="og:description" content="省赛/国赛理论考试备考题库，372题在线刷题，先选答案再显示答案，进度自动保存。">
+<meta property="og:url" content="https://mavericklou.github.io/flight-sim-quiz/fsx-quiz.html">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="模拟飞行省赛国赛理论题库_372题在线刷题">
+<meta name="twitter:description" content="省赛/国赛理论考试备考题库，372题在线刷题，先选答案再显示答案，进度自动保存。">
+<meta name="theme-color" content="#0f3460">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -28,6 +43,33 @@ h1 {
   color: #888;
   font-size: 17px;
   margin-bottom: 30px;
+}
+.intro-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px 28px;
+  box-shadow: 0 4px 16px rgba(15, 52, 96, 0.12);
+  border-left: 5px solid #0f3460;
+  margin-bottom: 24px;
+}
+.intro-title {
+  font-size: 20px;
+  color: #16213e;
+  margin: 0 0 8px 0;
+}
+.intro-box p {
+  margin-bottom: 10px;
+  font-size: 17px;
+  line-height: 1.8;
+  color: #333;
+}
+.intro-box p:last-child { margin-bottom: 0; }
+.intro-tip {
+  background: #f0f7ff;
+  border: 1px dashed #2196f3;
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: #0d47a1 !important;
 }
 .grid {
   display: grid;
@@ -265,6 +307,9 @@ h1 {
   .container { max-width: 100%; }
   h1 { font-size: 22px; line-height: 1.4; }
   .subtitle { font-size: 14px; line-height: 1.6; }
+  .intro-box { padding: 14px 14px; margin-bottom: 14px; }
+  .intro-box p { font-size: 15px; line-height: 1.7; margin-bottom: 8px; }
+  .intro-title { font-size: 17px; }
   .grid {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -302,6 +347,13 @@ h1 {
 <div class="container">
 <h1>模拟飞行 · 初级中级题库372题交互练习</h1>
 <div class="subtitle">汇总：基础题库（小学）+ 中级/182题库初级题 + 练习90题 + 考纲薄弱领域补充38题 | 已排除争议题 | 先选答案，再点「显示答案」判定对错</div>
+<h2 class="intro-title">模拟飞行省赛 / 国赛理论考试备考说明</h2>
+<div class="intro-box">
+  <p>本题库专门服务于<strong>模拟飞行省赛与国赛的理论知识考试</strong>备考，共收录 <strong>372 道</strong>航空理论试题，内容依据赛事理论考纲整理，覆盖航空基础理论、飞行原理、航空气象、空中交通规则与陆空通话等核心考点。</p>
+  <p>题库由多套来源汇总去重：<strong>基础题库</strong>、<strong>182题库</strong>、<strong>中级题库</strong>、<strong>练习90题</strong>以及<strong>考纲薄弱领域补充38题</strong>，并已排除争议题目。所有题目均标注难度（初级/中级）与来源，支持按题库、按难度筛选，可单独针对薄弱板块强化训练。</p>
+  <p><strong>使用方法：</strong>先点击选择你认为正确的答案，再点「显示答案」判定对错并查看正确选项；答题进度自动保存在本机，刷新页面不丢失；完成后点「清除进度重新开始」会生成新的随机排序并记录历史成绩。</p>
+  <p class="intro-tip">适用于：全国青少年模拟飞行锦标赛、各省/市模拟飞行选拔赛、飞行等级（初级/中级）理论考试赛前刷题与自测。</p>
+</div>
 <div class="top-bar">
   <select id="source-select" class="source-select" onchange="changeSource(this)">
     <option value="全部">📚 全部题目</option>

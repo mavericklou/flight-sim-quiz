@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mavericklou.github.io/flight-sim-quiz/sitemap.xml
