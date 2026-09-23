@@ -86,9 +86,11 @@ h1 {
   transition: transform 0.15s;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 .q-card:hover { transform: translateY(-3px); }
-.q-top { display: flex; align-items: center; margin-bottom: 4px; }
+.q-top { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 0; margin-bottom: 4px; min-width: 0; }
 .q-num {
   display: inline-block;
   background: #e94560;
@@ -104,13 +106,17 @@ h1 {
   flex-shrink: 0;
 }
 .q-cat {
-  font-size: 14px;
+  font-size: 13px;
   color: #666;
   background: #f0f0f0;
-  padding: 2px 12px;
+  padding: 2px 10px;
   border-radius: 12px;
   margin-left: auto;
-  white-space: nowrap;
+  max-width: calc(100% - 50px);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+  text-align: right;
 }
 .q-text {
   font-weight: bold;
@@ -118,6 +124,8 @@ h1 {
   color: #1a1a2e;
   margin: 12px 0 14px 0;
   min-height: 60px;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 .opt {
   padding: 8px 14px;
@@ -305,6 +313,7 @@ h1 {
     font-size: 18px;
   }
   .container { max-width: 100%; }
+  html, body { overflow-x: hidden; max-width: 100%; }
   h1 { font-size: 22px; line-height: 1.4; }
   .subtitle { font-size: 14px; line-height: 1.6; }
   .intro-box { padding: 14px 14px; margin-bottom: 14px; }
@@ -314,11 +323,16 @@ h1 {
     grid-template-columns: 1fr;
     gap: 12px;
   }
-  .q-card { padding: 16px; border-radius: 14px; }
-  .q-text { font-size: 20px; min-height: 0; line-height: 1.6; }
+  .q-card { padding: 16px; border-radius: 14px; min-width: 0; max-width: 100%; }
+  .q-text { font-size: 20px; min-height: 0; line-height: 1.6; overflow-wrap: break-word; }
   .q-num { width: 34px; height: 34px; line-height: 34px; font-size: 16px; }
-  .q-cat { font-size: 14px; padding: 2px 10px; }
-  .opt { font-size: 17px; padding: 11px 14px; margin: 5px 0; line-height: 1.5; }
+  .q-cat {
+    font-size: 12px;
+    padding: 2px 8px;
+    line-height: 1.45;
+    max-width: calc(100% - 48px);
+  }
+  .opt { font-size: 17px; padding: 11px 14px; margin: 5px 0; line-height: 1.5; overflow-wrap: break-word; }
   .ans-btn { font-size: 18px; padding: 11px 0; width: 100%; border-radius: 10px; }
   .ans-reveal { font-size: 16px; padding: 10px 14px; line-height: 1.5; }
   .reset-btn { font-size: 15px; padding: 11px 18px; width: 100%; }
