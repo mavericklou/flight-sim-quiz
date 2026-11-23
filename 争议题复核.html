@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>争议题人工复核 · 模拟飞行理论题库</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.7;color:#222;background:linear-gradient(160deg,#f0f4fa,#e8edf5);padding:32px 20px;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
+.lead{text-align:center;color:#666;font-size:15px;margin-bottom:20px}
+.panel{background:#fff;border-radius:14px;padding:16px 20px;box-shadow:0 4px 16px rgba(15,52,96,.12);margin-bottom:20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.panel select,.panel button{font-family:inherit;font-size:15px;padding:8px 14px;border-radius:8px;border:2px solid #0f3460;background:#fff;color:#16213e;cursor:pointer}
+.panel button.primary{background:#0f3460;color:#fff}
+.panel .stat{margin-left:auto;color:#555;font-size:14px}
+.card{background:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 4px 16px rgba(15,52,96,.12);border-left:6px solid #bbb;margin-bottom:16px}
+.card-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.num{display:inline-block;background:#0f3460;color:#fff;font-weight:bold;width:30px;height:30px;line-height:30px;text-align:center;border-radius:50%}
+.tag{padding:2px 12px;border-radius:12px;font-size:14px;font-weight:bold}
+.tag.err{background:#fde8e8;color:#c0392b}
+.tag.conflict{background:#fef5e7;color:#b9770e}
+.tag.doubt{background:#fff3cd;color:#8a6d1b}
+.tag.pending{background:#eaf2ff;color:#0d47a1}
+.tag.fixed{background:#e8f8e8;color:#1e7a34}
+.bank{color:#666;font-size:14px}
+.pill{font-size:13px;padding:2px 10px;border-radius:12px;margin-left:auto}
+.pill.inpage{background:#fff3cd;color:#8a6d1b;border:1px solid #ffc107}
+.pill.excluded{background:#e8f8e8;color:#1e7a34;border:1px solid #27ae60}
+.qtext{font-size:19px;font-weight:bold;color:#1a1a2e;margin-bottom:10px;overflow-wrap:break-word}
+.opt{padding:6px 12px;margin:3px 0;border-radius:8px;background:#f8f9fa;border:1px solid #e5e5e5;overflow-wrap:break-word}
+.opt.correct{background:#e8f8e8;border-color:#27ae60;color:#1e7a34;font-weight:bold}
+.meta{font-size:14px;color:#666;margin-top:8px;overflow-wrap:break-word}
+.reason{background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:8px 12px;margin-top:10px;font-size:15px}
+.review{margin-top:12px;padding-top:10px;border-top:1px dashed #ddd;display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:14px}
+.review select{font-family:inherit;font-size:14px;padding:4px 8px;border-radius:6px;border:1px solid #bbb}
+.note-label{flex:1;min-width:200px}
+.note{width:100%;font-family:inherit;font-size:14px;padding:6px 8px;border-radius:6px;border:1px solid #bbb;resize:vertical}
+.saved{color:#27ae60;font-size:13px;min-width:60px}
+@media(max-width:700px){body{padding:12px 8px}.card{padding:14px}.qtext{font-size:17px}.pill{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>争议题人工复核</h1>
+<div class="lead">共 22 题：已从主页面排除 11 题，仍在主页面中出现 11 题。复核结论与备注自动保存在本机浏览器，可导出 JSON。</div>
+<div class="panel">
+  <select id="f-bank"><option value="">全部题库</option><option>基础/初级</option><option>中级</option></select>
+  <select id="f-tag"><option value="">全部标签</option><option>🔴 错误</option><option>🔴 关联错误（182题库第53题）</option><option>🔴 关联矛盾（182题库第144题）</option><option>🟡 冲突</option><option>🟠 存疑</option><option>⚪ 待核实</option><option>⚪ 待核实（看图题）</option><option>⚠️ 已修复</option></select>
+  <select id="f-page"><option value="">全部状态</option><option value="true">页面中仍存在</option><option value="false">已从页面排除</option></select>
+  <button id="btn-export" class="primary">导出复核结果</button>
+  <span class="stat" id="stat"></span>
+</div>
+<div class="card" data-bank="基础/初级" data-tag="🔴 关联错误（182题库第53题）" data-inpage="true" data-key="基础/初级_field_34">
+  <div class="card-head">
+    <span class="num">1</span>
+    <span class="tag err">🔴 关联错误（182题库第53题）</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill inpage">页面中仍存在</span>
+  </div>
+  <div class="qtext">在进近和着陆时，襟翼的主要作用是【 】</div>
+  <div class="opts"><div class="opt"><b>A.</b> 允许以更大的指示空速接地</div><div class="opt correct"><b>B.</b> 增加下降坡度而不增加空速</div><div class="opt"><b>C.</b> 减小下降坡度而不增加空速选项</div></div>
+  <div class="meta">正确答案：<b>B. 增加下降坡度而不增加空速</b>　｜　新抓取序号：22　｜　field_34</div>
+  <div class="reason"><b>争议原因：</b>本题库答案“增加下降坡度而不增加空速”正确；182 题库同题答案有误。</div>
+  <div class="meta">旧标注：基础题库第36题（关联 182 题库第53题）　｜　处理依据：关联争议；本题库答案正确，保留</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="基础/初级" data-tag="🟠 存疑" data-inpage="false" data-key="基础/初级_field_35">
+  <div class="card-head">
+    <span class="num">2</span>
+    <span class="tag doubt">🟠 存疑</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill excluded">已从页面排除</span>
+  </div>
+  <div class="qtext">飞机中的“黑匣子”全称是【 】</div>
+  <div class="opts"><div class="opt correct"><b>A.</b> 飞行数据记录仪</div><div class="opt"><b>B.</b> 舱音记录仪</div><div class="opt"><b>C.</b> 低空通话记录仪</div></div>
+  <div class="meta">正确答案：<b>A. 飞行数据记录仪</b>　｜　新抓取序号：23　｜　field_35</div>
+  <div class="reason"><b>争议原因：</b>黑匣子实为两套设备：飞行数据记录仪(FDR)+驾驶舱话音记录器(CVR)，单答“飞行数据记录仪”不完整。</div>
+  <div class="meta">旧标注：基础题库第83题 / 182题库第54题　｜　处理依据：base_doubt_kws: “黑匣子”全称</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="基础/初级" data-tag="⚪ 待核实（看图题）" data-inpage="false" data-key="基础/初级_field_47">
+  <div class="card-head">
+    <span class="num">3</span>
+    <span class="tag pending">⚪ 待核实（看图题）</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill excluded">已从页面排除</span>
+  </div>
+  <div class="qtext">下图中六大仪表从左至右，从上到下依次是</div>
+  <div class="opts"><div class="opt"><b>A.</b> 上：空速表-转弯侧滑仪-气压式高度表；下：姿态仪-航向仪-垂直速率表（升降速度表）</div><div class="opt correct"><b>B.</b> 上：空速表-姿态仪-气压式高度表；下：转弯侧滑仪-航向仪-垂直速率表（升降速度表）</div><div class="opt"><b>C.</b> 上：空速表-姿态仪-垂直速率表（升降速度表）；下：转弯侧滑仪-航向仪-气压式高度表</div></div>
+  <div class="meta">正确答案：<b>B. 上：空速表-姿态仪-气压式高度表；下：转弯侧滑仪-航向仪-垂直速率表（升降速度表）</b>　｜　新抓取序号：35　｜　field_47</div>
+  <div class="reason"><b>争议原因：</b>答案依赖原题配图，需对照图片确认。</div>
+  <div class="meta">旧标注：基础题库看图题　｜　处理依据：base_doubt_kws: 六大仪表</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="基础/初级" data-tag="⚪ 待核实（看图题）" data-inpage="false" data-key="基础/初级_field_48">
+  <div class="card-head">
+    <span class="num">4</span>
+    <span class="tag pending">⚪ 待核实（看图题）</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill excluded">已从页面排除</span>
+  </div>
+  <div class="qtext">2. 下图（从左向右）第3个图标代表【 】</div>
+  <div class="opts"><div class="opt"><b>A.</b> 油门</div><div class="opt"><b>B.</b> 刹车</div><div class="opt correct"><b>C.</b> 进气压力</div></div>
+  <div class="meta">正确答案：<b>C. 进气压力</b>　｜　新抓取序号：36　｜　field_48</div>
+  <div class="reason"><b>争议原因：</b>答案依赖原题配图，需对照图片确认。</div>
+  <div class="meta">旧标注：基础题库看图题　｜　处理依据：base_doubt_kws: 第3个图标</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="基础/初级" data-tag="⚪ 待核实（看图题）" data-inpage="false" data-key="基础/初级_field_49">
+  <div class="card-head">
+    <span class="num">5</span>
+    <span class="tag pending">⚪ 待核实（看图题）</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill excluded">已从页面排除</span>
+  </div>
+  <div class="qtext">如图：高度表2指示的高度是【 】</div>
+  <div class="opts"><div class="opt"><b>A.</b> 1500ft</div><div class="opt correct"><b>B.</b> 14500ft</div><div class="opt"><b>C.</b> 4500ft</div></div>
+  <div class="meta">正确答案：<b>B. 14500ft</b>　｜　新抓取序号：37　｜　field_49</div>
+  <div class="reason"><b>争议原因：</b>答案依赖原题配图，需对照图片确认。</div>
+  <div class="meta">旧标注：基础题库看图题　｜　处理依据：base_doubt_kws: 高度表2</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="基础/初级" data-tag="⚪ 待核实（看图题）" data-inpage="false" data-key="基础/初级_field_59">
+  <div class="card-head">
+    <span class="num">6</span>
+    <span class="tag pending">⚪ 待核实（看图题）</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill excluded">已从页面排除</span>
+  </div>
+  <div class="qtext">图中表示飞机位于【 】向前滑行进入前方道路左转后是进入了【 】</div>
+  <div class="opts"><div class="opt"><b>A.</b> 停机位 跑道2L</div><div class="opt"><b>B.</b> 滑行道 滑行道20R</div><div class="opt correct"><b>C.</b> 滑行道 跑道2L</div></div>
+  <div class="meta">正确答案：<b>C. 滑行道 跑道2L</b>　｜　新抓取序号：47　｜　field_59</div>
+  <div class="reason"><b>争议原因：</b>答案依赖原题配图，需对照图片确认。</div>
+  <div class="meta">旧标注：基础题库看图题　｜　处理依据：base_doubt_kws: 图中表示飞机</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="基础/初级" data-tag="🟠 存疑" data-inpage="false" data-key="基础/初级_field_71">
+  <div class="card-head">
+    <span class="num">7</span>
+    <span class="tag doubt">🟠 存疑</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill excluded">已从页面排除</span>
+  </div>
+  <div class="qtext">气压式高度表的英文是【 】</div>
+  <div class="opts"><div class="opt correct"><b>A.</b> altitude indicator</div><div class="opt"><b>B.</b> heading indicator</div><div class="opt"><b>C.</b> attitude indicator</div><div class="opt"><b>D.</b> airspeed indicator</div></div>
+  <div class="meta">正确答案：<b>A. altitude indicator</b>　｜　新抓取序号：58　｜　field_71</div>
+  <div class="reason"><b>争议原因：</b>标准航空英语为 altimeter（182题库第103题即用它），选项中没有 altimeter，选 altitude indicator 可接受但非标准。</div>
+  <div class="meta">旧标注：基础题库第64题（旧汇总标注）　｜　处理依据：base_doubt_kws: 气压式高度表的英文</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="基础/初级" data-tag="🔴 关联矛盾（182题库第144题）" data-inpage="true" data-key="基础/初级_field_88">
+  <div class="card-head">
+    <span class="num">8</span>
+    <span class="tag pending">🔴 关联矛盾（182题库第144题）</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill inpage">页面中仍存在</span>
+  </div>
+  <div class="qtext">飞机在什么情况下会发生失速？</div>
+  <div class="opts"><div class="opt"><b>A.</b> 只会在速度小的时候</div><div class="opt"><b>B.</b> 只会在速度大的时候</div><div class="opt correct"><b>C.</b> 在任何速度的时候都有可能</div></div>
+  <div class="meta">正确答案：<b>C. 在任何速度的时候都有可能</b>　｜　新抓取序号：75　｜　field_88</div>
+  <div class="reason"><b>争议原因：</b>本题库答案“任何速度都有可能”正确；182 题库同题答案与之逻辑矛盾。</div>
+  <div class="meta">旧标注：基础题库第100题（关联 182 题库第144题）　｜　处理依据：关联争议；本题库答案正确，保留</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="基础/初级" data-tag="🟠 存疑" data-inpage="false" data-key="基础/初级_field_103">
+  <div class="card-head">
+    <span class="num">9</span>
+    <span class="tag doubt">🟠 存疑</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill excluded">已从页面排除</span>
+  </div>
+  <div class="qtext">在航空英语中，正确表述“国家”的常用词汇包括</div>
+  <div class="opts"><div class="opt correct"><b>A.</b> country、nation、state</div><div class="opt"><b>B.</b> country、nation、motherland</div><div class="opt"><b>C.</b> country、state、motherland</div></div>
+  <div class="meta">正确答案：<b>A. country、nation、state</b>　｜　新抓取序号：90　｜　field_103</div>
+  <div class="reason"><b>争议原因：</b>“正确表述国家”题与常用词典释义有出入，可能以出题方教材为准。</div>
+  <div class="meta">旧标注：基础题库第33题（国家词汇）　｜　处理依据：base_doubt_kws: 正确表述“国家”</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="基础/初级" data-tag="🟠 存疑" data-inpage="false" data-key="基础/初级_field_104">
+  <div class="card-head">
+    <span class="num">10</span>
+    <span class="tag doubt">🟠 存疑</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill excluded">已从页面排除</span>
+  </div>
+  <div class="qtext">在航空英语中，表述“国家”的常用词汇 country 的词义是【 】</div>
+  <div class="opts"><div class="opt correct"><b>A.</b> 区域、疆域</div><div class="opt"><b>B.</b> 民族、文化</div><div class="opt"><b>C.</b> 政权、政府</div></div>
+  <div class="meta">正确答案：<b>A. 区域、疆域</b>　｜　新抓取序号：91　｜　field_104</div>
+  <div class="reason"><b>争议原因：</b>country 通常指“国家/国土”，与常用词典释义有出入，可能以出题方教材为准。</div>
+  <div class="meta">旧标注：基础题库第34题（国家词汇）　｜　处理依据：base_doubt_kws: country</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="基础/初级" data-tag="🟠 存疑" data-inpage="false" data-key="基础/初级_field_105">
+  <div class="card-head">
+    <span class="num">11</span>
+    <span class="tag doubt">🟠 存疑</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill excluded">已从页面排除</span>
+  </div>
+  <div class="qtext">在航空英语中，表述“国家”的常用词汇 nation 的词义是【 】</div>
+  <div class="opts"><div class="opt"><b>A.</b> 区域、疆域</div><div class="opt correct"><b>B.</b> 民族、文化</div><div class="opt"><b>C.</b> 政权、政府</div></div>
+  <div class="meta">正确答案：<b>B. 民族、文化</b>　｜　新抓取序号：92　｜　field_105</div>
+  <div class="reason"><b>争议原因：</b>nation 通常指“民族/国家”，与常用词典释义有出入，可能以出题方教材为准。</div>
+  <div class="meta">旧标注：基础题库第35题（国家词汇）　｜　处理依据：base_doubt_kws: nation</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="基础/初级" data-tag="⚠️ 已修复" data-inpage="true" data-key="基础/初级_field_107">
+  <div class="card-head">
+    <span class="num">12</span>
+    <span class="tag fixed">⚠️ 已修复</span>
+    <span class="bank">基础/初级</span>
+    <span class="pill inpage">页面中仍存在</span>
+  </div>
+  <div class="qtext">因模拟座舱被漆成蓝色，故俗称【蓝盒子】，指的是哪台实用型飞行模拟器？</div>
+  <div class="opts"><div class="opt correct"><b>A.</b> 林克训练器   艾德温·林克</div><div class="opt"><b>B.</b> 安托瓦内特训练器</div><div class="opt"><b>C.</b> 桑德斯教官训练器   海登·桑德斯</div></div>
+  <div class="meta">正确答案：<b>A. 林克训练器   艾德温·林克</b>　｜　新抓取序号：94　｜　field_107</div>
+  <div class="reason"><b>争议原因：</b>原答案文本含多个连续空格导致匹配失败（显示“?”），已修复为 A「林克训练器 艾德温·林克」。</div>
+  <div class="meta">旧标注：基础题库蓝盒子题　｜　处理依据：曾被标注；未列入排除关键词，最终保留在页面</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="中级" data-tag="🟡 冲突" data-inpage="false" data-key="中级_field_12">
+  <div class="card-head">
+    <span class="num">13</span>
+    <span class="tag conflict">🟡 冲突</span>
+    <span class="bank">中级</span>
+    <span class="pill excluded">已从页面排除</span>
+  </div>
+  <div class="qtext">飞行中遇到左侧滑，机头【 】</div>
+  <div class="opts"><div class="opt"><b>A.</b> 左偏</div><div class="opt correct"><b>B.</b> 右偏</div><div class="opt"><b>C.</b> 不偏</div></div>
+  <div class="meta">正确答案：<b>B. 右偏</b>　｜　新抓取序号：11　｜　field_12</div>
+  <div class="reason"><b>争议原因：</b>左侧滑时机头偏转方向两题库说法相反（182:左偏，中级:右偏）。</div>
+  <div class="meta">旧标注：中级题库第20题 / 182题库第109题　｜　处理依据：mid_doubt_kws: 左侧滑</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="中级" data-tag="🟠 存疑" data-inpage="true" data-key="中级_field_18">
+  <div class="card-head">
+    <span class="num">14</span>
+    <span class="tag doubt">🟠 存疑</span>
+    <span class="bank">中级</span>
+    <span class="pill inpage">页面中仍存在</span>
+  </div>
+  <div class="qtext">一般表示飞行器速度的单位是【 】</div>
+  <div class="opts"><div class="opt correct"><b>A.</b> 马赫</div><div class="opt"><b>B.</b> 节</div><div class="opt"><b>C.</b> 千米/小时</div></div>
+  <div class="meta">正确答案：<b>A. 马赫</b>　｜　新抓取序号：17　｜　field_18</div>
+  <div class="reason"><b>争议原因：</b>航空中最常用的速度单位是节(knot)，马赫仅用于高速飞行描述。</div>
+  <div class="meta">旧标注：中级题库第50题 / 182题库第99题　｜　处理依据：保留（被归类为中级难度，未从页面排除）</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="中级" data-tag="🟠 存疑" data-inpage="true" data-key="中级_field_28">
+  <div class="card-head">
+    <span class="num">15</span>
+    <span class="tag doubt">🟠 存疑</span>
+    <span class="bank">中级</span>
+    <span class="pill inpage">页面中仍存在</span>
+  </div>
+  <div class="qtext">一“马赫”是【 】</div>
+  <div class="opts"><div class="opt"><b>A.</b> 表示每小时多少海里</div><div class="opt"><b>B.</b> 表示每小时多少公里</div><div class="opt correct"><b>C.</b> 表示声音一小时所传播的距离</div></div>
+  <div class="meta">正确答案：<b>C. 表示声音一小时所传播的距离</b>　｜　新抓取序号：27　｜　field_28</div>
+  <div class="reason"><b>争议原因：</b>马赫数是飞行速度与当地音速之比（无量纲），不是“声音一小时传播的距离”。</div>
+  <div class="meta">旧标注：中级题库第53题 / 182题库第57题　｜　处理依据：保留（被归类为中级难度，未从页面排除）</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="中级" data-tag="🔴 错误" data-inpage="false" data-key="中级_field_38">
+  <div class="card-head">
+    <span class="num">16</span>
+    <span class="tag err">🔴 错误</span>
+    <span class="bank">中级</span>
+    <span class="pill excluded">已从页面排除</span>
+  </div>
+  <div class="qtext">第十届珠海航展上参展的一款由我国自行研制的隐形战机是【 】型号。</div>
+  <div class="opts"><div class="opt correct"><b>A.</b> 歼20</div><div class="opt"><b>B.</b> 歼11</div><div class="opt"><b>C.</b> 轰10</div></div>
+  <div class="meta">正确答案：<b>A. 歼20</b>　｜　新抓取序号：37　｜　field_38</div>
+  <div class="reason"><b>争议原因：</b>2014年第十届珠海航展公开飞行展示应为歼-31（FC-31）；歼-20 到2016年第十一届才首次公开亮相。</div>
+  <div class="meta">旧标注：中级题库第6题 / 182题库第26题　｜　处理依据：mid_doubt_kws: 第十届珠海航展</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="中级" data-tag="🟡 冲突" data-inpage="true" data-key="中级_field_47">
+  <div class="card-head">
+    <span class="num">17</span>
+    <span class="tag conflict">🟡 冲突</span>
+    <span class="bank">中级</span>
+    <span class="pill inpage">页面中仍存在</span>
+  </div>
+  <div class="qtext">航母着舰时挂住第【 】个阻拦索是最标准的。</div>
+  <div class="opts"><div class="opt"><b>A.</b> 1</div><div class="opt"><b>B.</b> 2</div><div class="opt correct"><b>C.</b> 3</div></div>
+  <div class="meta">正确答案：<b>C. 3</b>　｜　新抓取序号：46　｜　field_47</div>
+  <div class="reason"><b>争议原因：</b>挂第2根/第3根阻拦索都有教材依据，两题库答案不一致。</div>
+  <div class="meta">旧标注：中级题库第46题 / 182题库第64题　｜　处理依据：保留（被归类为中级难度，未从页面排除）</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="中级" data-tag="⚪ 待核实" data-inpage="true" data-key="中级_field_52">
+  <div class="card-head">
+    <span class="num">18</span>
+    <span class="tag pending">⚪ 待核实</span>
+    <span class="bank">中级</span>
+    <span class="pill inpage">页面中仍存在</span>
+  </div>
+  <div class="qtext">ASFC官方全国性模拟飞行锦标赛本场五边争霸赛中会加入侧风，侧风大小的范围是【 】</div>
+  <div class="opts"><div class="opt"><b>A.</b> 10-20节</div><div class="opt correct"><b>B.</b> 5-15节</div><div class="opt"><b>C.</b> 15-30节</div></div>
+  <div class="meta">正确答案：<b>B. 5-15节</b>　｜　新抓取序号：51　｜　field_52</div>
+  <div class="reason"><b>争议原因：</b>五边争霸赛侧风范围需对照官方竞赛规则核实。</div>
+  <div class="meta">旧标注：中级题库第14题 / 182题库第10题　｜　处理依据：保留（被归类为中级难度，未从页面排除）</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="中级" data-tag="⚪ 待核实" data-inpage="true" data-key="中级_field_53">
+  <div class="card-head">
+    <span class="num">19</span>
+    <span class="tag pending">⚪ 待核实</span>
+    <span class="bank">中级</span>
+    <span class="pill inpage">页面中仍存在</span>
+  </div>
+  <div class="qtext">本场五边训练中跑道入口处设定了最低高度，飞机不得低于【 】英尺飞跃跑道入口。</div>
+  <div class="opts"><div class="opt"><b>A.</b> 30</div><div class="opt"><b>B.</b> 40</div><div class="opt correct"><b>C.</b> 50</div></div>
+  <div class="meta">正确答案：<b>C. 50</b>　｜　新抓取序号：52　｜　field_53</div>
+  <div class="reason"><b>争议原因：</b>跑道入口最低高度需对照官方竞赛规则核实。</div>
+  <div class="meta">旧标注：中级题库第63题 / 182题库第12题　｜　处理依据：保留（被归类为中级难度，未从页面排除）</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="中级" data-tag="⚪ 待核实" data-inpage="true" data-key="中级_field_54">
+  <div class="card-head">
+    <span class="num">20</span>
+    <span class="tag pending">⚪ 待核实</span>
+    <span class="bank">中级</span>
+    <span class="pill inpage">页面中仍存在</span>
+  </div>
+  <div class="qtext">本场五边争霸赛中，第三边的标准飞行高度是【 】英尺。</div>
+  <div class="opts"><div class="opt"><b>A.</b> 500</div><div class="opt"><b>B.</b> 800</div><div class="opt correct"><b>C.</b> 1100</div></div>
+  <div class="meta">正确答案：<b>C. 1100</b>　｜　新抓取序号：53　｜　field_54</div>
+  <div class="reason"><b>争议原因：</b>第三边标准飞行高度需对照官方竞赛规则核实。</div>
+  <div class="meta">旧标注：中级题库第15题 / 182题库第18题　｜　处理依据：保留（被归类为中级难度，未从页面排除）</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="中级" data-tag="🔴 关联矛盾（182题库第144题）" data-inpage="true" data-key="中级_field_67">
+  <div class="card-head">
+    <span class="num">21</span>
+    <span class="tag pending">🔴 关联矛盾（182题库第144题）</span>
+    <span class="bank">中级</span>
+    <span class="pill inpage">页面中仍存在</span>
+  </div>
+  <div class="qtext">飞机在什么情况下会发生失速？</div>
+  <div class="opts"><div class="opt"><b>A.</b> 只会在速度小的时候</div><div class="opt"><b>B.</b> 只会在速度大的时候</div><div class="opt correct"><b>C.</b> 在任何速度的时候都有可能</div></div>
+  <div class="meta">正确答案：<b>C. 在任何速度的时候都有可能</b>　｜　新抓取序号：65　｜　field_67</div>
+  <div class="reason"><b>争议原因：</b>本题库答案“任何速度都有可能”正确；182 题库同题答案与之逻辑矛盾。</div>
+  <div class="meta">旧标注：中级题库关联 182 题库第144题　｜　处理依据：关联争议；本题库答案正确，保留</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div><div class="card" data-bank="中级" data-tag="⚪ 待核实" data-inpage="true" data-key="中级_field_86">
+  <div class="card-head">
+    <span class="num">22</span>
+    <span class="tag pending">⚪ 待核实</span>
+    <span class="bank">中级</span>
+    <span class="pill inpage">页面中仍存在</span>
+  </div>
+  <div class="qtext">在不同的地方和不同季节，太阳光照时间不一样，所以，在实际工作中，往往在能见度低于【 】时，就会将机场跑道两侧的导航灯亮起，开始按夜航标准进行管制。</div>
+  <div class="opts"><div class="opt"><b>A.</b> 500 m</div><div class="opt"><b>B.</b> 1 km</div><div class="opt correct"><b>C.</b> 2 km</div><div class="opt"><b>D.</b> 5 km</div></div>
+  <div class="meta">正确答案：<b>C. 2 km</b>　｜　新抓取序号：84　｜　field_86</div>
+  <div class="reason"><b>争议原因：</b>夜航管制启动的能见度标准需对照官方规则核实。</div>
+  <div class="meta">旧标注：中级题库第35题　｜　处理依据：保留（未从页面排除）</div>
+  <div class="review">
+    <label>复核结论：<select class="decision"><option value="">未复核</option><option>通过（保留原题）</option><option>修正答案/题干</option><option>建议移除</option></select></label>
+    <label class="note-label">备注：<textarea class="note" rows="2" placeholder="记录复核意见…"></textarea></label>
+    <span class="saved"></span>
+  </div>
+</div>
+</div>
+<script>
+var KEY='fsx_doubt_review_v1';
+function loadNotes(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+var notes=loadNotes();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(notes))}catch(e){}}
+document.querySelectorAll('.card').forEach(function(c){
+  var k=c.dataset.key,n=notes[k]||{};
+  var d=c.querySelector('.decision'),t=c.querySelector('.note'),s=c.querySelector('.saved');
+  d.value=n.decision||'';t.value=n.remark||'';
+  function upd(){notes[k]={decision:d.value,remark:t.value};save();s.textContent='已保存';setTimeout(function(){s.textContent=''},1200);}
+  d.addEventListener('change',upd);t.addEventListener('input',upd);
+});
+function filter(){
+  var b=document.getElementById('f-bank').value,g=document.getElementById('f-tag').value,p=document.getElementById('f-page').value,n=0;
+  document.querySelectorAll('.card').forEach(function(c){
+    var show=(!b||c.dataset.bank===b)&&(!g||c.dataset.tag===g)&&(!p||c.dataset.inpage===p);
+    c.style.display=show?'':'none';if(show)n++;
+  });
+  document.getElementById('stat').textContent='显示 '+n+' / 22 题';
+}
+['f-bank','f-tag','f-page'].forEach(function(id){document.getElementById(id).addEventListener('change',filter)});
+filter();
+document.getElementById('btn-export').onclick=function(){
+  var out=[];
+  document.querySelectorAll('.card').forEach(function(c){
+    out.push({题库:c.dataset.bank,apiCode:c.dataset.key.split('_').slice(1).join('_'),题干:c.querySelector('.qtext').textContent,
+      争议标签:c.dataset.tag,页面中仍存在:c.dataset.inpage==='true',
+      复核结论:c.querySelector('.decision').value,备注:c.querySelector('.note').value});
+  });
+  var blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='争议题复核结果.json';a.click();
+};
+</script>
+</body>
+</html>
