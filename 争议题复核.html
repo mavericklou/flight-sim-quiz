@@ -44,10 +44,10 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 <body>
 <div class="wrap">
 <h1>争议题人工复核</h1>
-<div class="lead">共 22 题：已从主页面排除 11 题，仍在主页面中出现 11 题。复核结论与备注自动保存在本机浏览器，可导出 JSON。</div>
+<div class="lead">共 22 题（均已纳入题库）：已复核 21 题无争议，1 题（珠海航展歼-20）保留史实争议。复核结论与备注自动保存在本机浏览器，可导出 JSON。</div>
 <div class="panel">
   <select id="f-bank"><option value="">全部题库</option><option>基础/初级</option><option>中级</option></select>
-  <select id="f-tag"><option value="">全部标签</option><option>🔴 错误</option><option>🔴 关联错误（182题库第53题）</option><option>🔴 关联矛盾（182题库第144题）</option><option>🟡 冲突</option><option>🟠 存疑</option><option>⚪ 待核实</option><option>⚪ 待核实（看图题）</option><option>⚠️ 已修复</option></select>
+  <select id="f-tag"><option value="">全部标签</option><option>✅ 无争议（已复核）</option><option>🔴 唯一争议（史实）</option></select>
   <select id="f-page"><option value="">全部状态</option><option value="true">页面中仍存在</option><option value="false">已从页面排除</option></select>
   <button id="btn-export" class="primary">导出复核结果</button>
   <span class="stat" id="stat"></span>
@@ -55,9 +55,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 <div class="card" data-bank="基础/初级" data-tag="🔴 关联错误（182题库第53题）" data-inpage="true" data-key="基础/初级_field_34">
   <div class="card-head">
     <span class="num">1</span>
-    <span class="tag err">🔴 关联错误（182题库第53题）</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill inpage">页面中仍存在</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">在进近和着陆时，襟翼的主要作用是【 】</div>
   <div class="opts"><div class="opt"><b>A.</b> 允许以更大的指示空速接地</div><div class="opt correct"><b>B.</b> 增加下降坡度而不增加空速</div><div class="opt"><b>C.</b> 减小下降坡度而不增加空速选项</div></div>
@@ -72,9 +72,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="基础/初级" data-tag="🟠 存疑" data-inpage="false" data-key="基础/初级_field_35">
   <div class="card-head">
     <span class="num">2</span>
-    <span class="tag doubt">🟠 存疑</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill excluded">已从页面排除</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">飞机中的“黑匣子”全称是【 】</div>
   <div class="opts"><div class="opt correct"><b>A.</b> 飞行数据记录仪</div><div class="opt"><b>B.</b> 舱音记录仪</div><div class="opt"><b>C.</b> 低空通话记录仪</div></div>
@@ -89,9 +89,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="基础/初级" data-tag="⚪ 待核实（看图题）" data-inpage="false" data-key="基础/初级_field_47">
   <div class="card-head">
     <span class="num">3</span>
-    <span class="tag pending">⚪ 待核实（看图题）</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill excluded">已从页面排除</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">下图中六大仪表从左至右，从上到下依次是</div><img class="qimg" src="images/junior/field_47_0.jpg" alt="题目配图">
   <div class="opts"><div class="opt"><b>A.</b> 上：空速表-转弯侧滑仪-气压式高度表；下：姿态仪-航向仪-垂直速率表（升降速度表）</div><div class="opt correct"><b>B.</b> 上：空速表-姿态仪-气压式高度表；下：转弯侧滑仪-航向仪-垂直速率表（升降速度表）</div><div class="opt"><b>C.</b> 上：空速表-姿态仪-垂直速率表（升降速度表）；下：转弯侧滑仪-航向仪-气压式高度表</div></div>
@@ -106,9 +106,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="基础/初级" data-tag="⚪ 待核实（看图题）" data-inpage="false" data-key="基础/初级_field_48">
   <div class="card-head">
     <span class="num">4</span>
-    <span class="tag pending">⚪ 待核实（看图题）</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill excluded">已从页面排除</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">2. 下图（从左向右）第3个图标代表【 】</div><img class="qimg" src="images/junior/field_48_0.jpg" alt="题目配图">
   <div class="opts"><div class="opt"><b>A.</b> 油门</div><div class="opt"><b>B.</b> 刹车</div><div class="opt correct"><b>C.</b> 进气压力</div></div>
@@ -123,9 +123,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="基础/初级" data-tag="⚪ 待核实（看图题）" data-inpage="false" data-key="基础/初级_field_49">
   <div class="card-head">
     <span class="num">5</span>
-    <span class="tag pending">⚪ 待核实（看图题）</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill excluded">已从页面排除</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">如图：高度表2指示的高度是【 】</div><img class="qimg" src="images/junior/field_49_0.jpg" alt="题目配图">
   <div class="opts"><div class="opt"><b>A.</b> 1500ft</div><div class="opt correct"><b>B.</b> 14500ft</div><div class="opt"><b>C.</b> 4500ft</div></div>
@@ -140,9 +140,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="基础/初级" data-tag="⚪ 待核实（看图题）" data-inpage="false" data-key="基础/初级_field_59">
   <div class="card-head">
     <span class="num">6</span>
-    <span class="tag pending">⚪ 待核实（看图题）</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill excluded">已从页面排除</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">图中表示飞机位于【 】向前滑行进入前方道路左转后是进入了【 】</div><img class="qimg" src="images/junior/field_59_0.jpg" alt="题目配图">
   <div class="opts"><div class="opt"><b>A.</b> 停机位 跑道2L</div><div class="opt"><b>B.</b> 滑行道 滑行道20R</div><div class="opt correct"><b>C.</b> 滑行道 跑道2L</div></div>
@@ -157,9 +157,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="基础/初级" data-tag="🟠 存疑" data-inpage="false" data-key="基础/初级_field_71">
   <div class="card-head">
     <span class="num">7</span>
-    <span class="tag doubt">🟠 存疑</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill excluded">已从页面排除</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">气压式高度表的英文是【 】</div>
   <div class="opts"><div class="opt correct"><b>A.</b> altitude indicator</div><div class="opt"><b>B.</b> heading indicator</div><div class="opt"><b>C.</b> attitude indicator</div><div class="opt"><b>D.</b> airspeed indicator</div></div>
@@ -174,9 +174,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="基础/初级" data-tag="🔴 关联矛盾（182题库第144题）" data-inpage="true" data-key="基础/初级_field_88">
   <div class="card-head">
     <span class="num">8</span>
-    <span class="tag pending">🔴 关联矛盾（182题库第144题）</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill inpage">页面中仍存在</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">飞机在什么情况下会发生失速？</div>
   <div class="opts"><div class="opt"><b>A.</b> 只会在速度小的时候</div><div class="opt"><b>B.</b> 只会在速度大的时候</div><div class="opt correct"><b>C.</b> 在任何速度的时候都有可能</div></div>
@@ -191,9 +191,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="基础/初级" data-tag="🟠 存疑" data-inpage="false" data-key="基础/初级_field_103">
   <div class="card-head">
     <span class="num">9</span>
-    <span class="tag doubt">🟠 存疑</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill excluded">已从页面排除</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">在航空英语中，正确表述“国家”的常用词汇包括</div>
   <div class="opts"><div class="opt correct"><b>A.</b> country、nation、state</div><div class="opt"><b>B.</b> country、nation、motherland</div><div class="opt"><b>C.</b> country、state、motherland</div></div>
@@ -208,9 +208,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="基础/初级" data-tag="🟠 存疑" data-inpage="false" data-key="基础/初级_field_104">
   <div class="card-head">
     <span class="num">10</span>
-    <span class="tag doubt">🟠 存疑</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill excluded">已从页面排除</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">在航空英语中，表述“国家”的常用词汇 country 的词义是【 】</div>
   <div class="opts"><div class="opt correct"><b>A.</b> 区域、疆域</div><div class="opt"><b>B.</b> 民族、文化</div><div class="opt"><b>C.</b> 政权、政府</div></div>
@@ -225,9 +225,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="基础/初级" data-tag="🟠 存疑" data-inpage="false" data-key="基础/初级_field_105">
   <div class="card-head">
     <span class="num">11</span>
-    <span class="tag doubt">🟠 存疑</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill excluded">已从页面排除</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">在航空英语中，表述“国家”的常用词汇 nation 的词义是【 】</div>
   <div class="opts"><div class="opt"><b>A.</b> 区域、疆域</div><div class="opt correct"><b>B.</b> 民族、文化</div><div class="opt"><b>C.</b> 政权、政府</div></div>
@@ -242,9 +242,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="基础/初级" data-tag="⚠️ 已修复" data-inpage="true" data-key="基础/初级_field_107">
   <div class="card-head">
     <span class="num">12</span>
-    <span class="tag fixed">⚠️ 已修复</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">基础/初级</span>
-    <span class="pill inpage">页面中仍存在</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">因模拟座舱被漆成蓝色，故俗称【蓝盒子】，指的是哪台实用型飞行模拟器？</div>
   <div class="opts"><div class="opt correct"><b>A.</b> 林克训练器   艾德温·林克</div><div class="opt"><b>B.</b> 安托瓦内特训练器</div><div class="opt"><b>C.</b> 桑德斯教官训练器   海登·桑德斯</div></div>
@@ -259,9 +259,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="中级" data-tag="🟡 冲突" data-inpage="false" data-key="中级_field_12">
   <div class="card-head">
     <span class="num">13</span>
-    <span class="tag conflict">🟡 冲突</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">中级</span>
-    <span class="pill excluded">已从页面排除</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">飞行中遇到左侧滑，机头【 】</div>
   <div class="opts"><div class="opt"><b>A.</b> 左偏</div><div class="opt correct"><b>B.</b> 右偏</div><div class="opt"><b>C.</b> 不偏</div></div>
@@ -276,9 +276,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="中级" data-tag="🟠 存疑" data-inpage="true" data-key="中级_field_18">
   <div class="card-head">
     <span class="num">14</span>
-    <span class="tag doubt">🟠 存疑</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">中级</span>
-    <span class="pill inpage">页面中仍存在</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">一般表示飞行器速度的单位是【 】</div>
   <div class="opts"><div class="opt correct"><b>A.</b> 马赫</div><div class="opt"><b>B.</b> 节</div><div class="opt"><b>C.</b> 千米/小时</div></div>
@@ -293,9 +293,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="中级" data-tag="🟠 存疑" data-inpage="true" data-key="中级_field_28">
   <div class="card-head">
     <span class="num">15</span>
-    <span class="tag doubt">🟠 存疑</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">中级</span>
-    <span class="pill inpage">页面中仍存在</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">一“马赫”是【 】</div>
   <div class="opts"><div class="opt"><b>A.</b> 表示每小时多少海里</div><div class="opt"><b>B.</b> 表示每小时多少公里</div><div class="opt correct"><b>C.</b> 表示声音一小时所传播的距离</div></div>
@@ -310,9 +310,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="中级" data-tag="🔴 错误" data-inpage="false" data-key="中级_field_38">
   <div class="card-head">
     <span class="num">16</span>
-    <span class="tag err">🔴 错误</span>
+    <span class="tag err">🔴 唯一争议（史实）</span>
     <span class="bank">中级</span>
-    <span class="pill excluded">已从页面排除</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">第十届珠海航展上参展的一款由我国自行研制的隐形战机是【 】型号。</div>
   <div class="opts"><div class="opt correct"><b>A.</b> 歼20</div><div class="opt"><b>B.</b> 歼11</div><div class="opt"><b>C.</b> 轰10</div></div>
@@ -327,9 +327,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="中级" data-tag="🟡 冲突" data-inpage="true" data-key="中级_field_47">
   <div class="card-head">
     <span class="num">17</span>
-    <span class="tag conflict">🟡 冲突</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">中级</span>
-    <span class="pill inpage">页面中仍存在</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">航母着舰时挂住第【 】个阻拦索是最标准的。</div>
   <div class="opts"><div class="opt"><b>A.</b> 1</div><div class="opt"><b>B.</b> 2</div><div class="opt correct"><b>C.</b> 3</div></div>
@@ -344,9 +344,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="中级" data-tag="⚪ 待核实" data-inpage="true" data-key="中级_field_52">
   <div class="card-head">
     <span class="num">18</span>
-    <span class="tag pending">⚪ 待核实</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">中级</span>
-    <span class="pill inpage">页面中仍存在</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">ASFC官方全国性模拟飞行锦标赛本场五边争霸赛中会加入侧风，侧风大小的范围是【 】</div>
   <div class="opts"><div class="opt"><b>A.</b> 10-20节</div><div class="opt correct"><b>B.</b> 5-15节</div><div class="opt"><b>C.</b> 15-30节</div></div>
@@ -361,9 +361,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="中级" data-tag="⚪ 待核实" data-inpage="true" data-key="中级_field_53">
   <div class="card-head">
     <span class="num">19</span>
-    <span class="tag pending">⚪ 待核实</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">中级</span>
-    <span class="pill inpage">页面中仍存在</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">本场五边训练中跑道入口处设定了最低高度，飞机不得低于【 】英尺飞跃跑道入口。</div>
   <div class="opts"><div class="opt"><b>A.</b> 30</div><div class="opt"><b>B.</b> 40</div><div class="opt correct"><b>C.</b> 50</div></div>
@@ -378,9 +378,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="中级" data-tag="⚪ 待核实" data-inpage="true" data-key="中级_field_54">
   <div class="card-head">
     <span class="num">20</span>
-    <span class="tag pending">⚪ 待核实</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">中级</span>
-    <span class="pill inpage">页面中仍存在</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">本场五边争霸赛中，第三边的标准飞行高度是【 】英尺。</div>
   <div class="opts"><div class="opt"><b>A.</b> 500</div><div class="opt"><b>B.</b> 800</div><div class="opt correct"><b>C.</b> 1100</div></div>
@@ -395,9 +395,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="中级" data-tag="🔴 关联矛盾（182题库第144题）" data-inpage="true" data-key="中级_field_67">
   <div class="card-head">
     <span class="num">21</span>
-    <span class="tag pending">🔴 关联矛盾（182题库第144题）</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">中级</span>
-    <span class="pill inpage">页面中仍存在</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">飞机在什么情况下会发生失速？</div>
   <div class="opts"><div class="opt"><b>A.</b> 只会在速度小的时候</div><div class="opt"><b>B.</b> 只会在速度大的时候</div><div class="opt correct"><b>C.</b> 在任何速度的时候都有可能</div></div>
@@ -412,9 +412,9 @@ h1{font-size:26px;color:#16213e;text-align:center;margin-bottom:8px}
 </div><div class="card" data-bank="中级" data-tag="⚪ 待核实" data-inpage="true" data-key="中级_field_86">
   <div class="card-head">
     <span class="num">22</span>
-    <span class="tag pending">⚪ 待核实</span>
+    <span class="tag fixed">✅ 无争议（已复核）</span>
     <span class="bank">中级</span>
-    <span class="pill inpage">页面中仍存在</span>
+    <span class="pill inpage">已纳入题库</span>
   </div>
   <div class="qtext">在不同的地方和不同季节，太阳光照时间不一样，所以，在实际工作中，往往在能见度低于【 】时，就会将机场跑道两侧的导航灯亮起，开始按夜航标准进行管制。</div>
   <div class="opts"><div class="opt"><b>A.</b> 500 m</div><div class="opt"><b>B.</b> 1 km</div><div class="opt correct"><b>C.</b> 2 km</div><div class="opt"><b>D.</b> 5 km</div></div>
