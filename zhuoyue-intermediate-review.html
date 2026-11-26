@@ -27,7 +27,14 @@
 <div class="subtitle">上海焯越模拟飞行理论题库 · 复习模式 · 共 87 题</div>
 <div class="top-bar">
   <span class="crumbs"><a href="index.html">上海焯越专区</a> ／ 中级复习</span>
-  <button class="btn secondary" onclick="clearProgress()">🗑 清除进度重新开始</button>
+<div class="controls">
+    <input id="search-input" class="search-input" type="search" placeholder="搜索题目或选项关键词" oninput="applyView()">
+    <select id="sort-select" class="sort-select" onchange="applyView()">
+      <option value="random">随机顺序</option>
+      <option value="wrong" title="优先按本机错误率，无本机记录时按全员错误率">错误率（高→低）</option>
+    </select>
+    <button class="btn secondary" onclick="clearProgress()">🗑 清除进度重新开始</button>
+  </div>
 </div>
 <div class="grid">
 <div class="q-card" data-qid="qb1a94ad7462e" data-idx="0" data-diff="初级" data-answer="flap aileron elevator" data-letter="A"><div class="q-top"><span class="q-num">1</span><span class="q-diff">初级</span><span class="q-status"></span><span class="q-stat" data-qid="qb1a94ad7462e"></span></div><div class="q-text">襟翼、副翼、升降舵的英文是？</div><div class="opt" data-correct="true" onclick="selectOpt(this)">A. flap aileron elevator</div><div class="opt" data-correct="false" onclick="selectOpt(this)">B. wing aileron rudder</div><div class="opt" data-correct="false" onclick="selectOpt(this)">C. flap aileron rudder</div><div class="ans-area"><button class="ans-btn" onclick="toggleAns(this)" disabled>显示答案</button><div class="ans-reveal"></div></div></div>
@@ -129,6 +136,57 @@
 <button id="back-top" class="back-top" type="button" title="回到顶部" aria-label="回到顶部" onclick="scrollToTop()">⬆</button>
 <script src="zhuoyue-stats.js"></script>
 <script>
+
+// ===== 随机顺序 / 错误率排序 / 关键词搜索 =====
+var ORDER_KEY = 'zhuoyue_review_intermediate_order_v1';
+var GRID = document.querySelector('.grid');
+var CARDS = Array.prototype.slice.call(GRID.querySelectorAll('.q-card'));
+
+function shuffleArr(arr) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+function getOrder() {
+  var order = null;
+  try { order = JSON.parse(localStorage.getItem(ORDER_KEY) || 'null'); } catch (e) {}
+  if (!order || order.length !== CARDS.length) {
+    order = CARDS.map(function (c) { return c.getAttribute('data-idx'); });
+    shuffleArr(order);
+    try { localStorage.setItem(ORDER_KEY, JSON.stringify(order)); } catch (e) {}
+  }
+  return order;
+}
+function wrongRate(card) {
+  var qid = card.dataset.qid;
+  var l = Stats.local()[qid];
+  if (l && l.a) return 1 - l.c / l.a;
+  var g = Stats.globalData()[qid];
+  if (g && g.a) return 1 - g.c / g.a;
+  return 0;
+}
+function applyView() {
+  var byIdx = {};
+  CARDS.forEach(function (c) { byIdx[c.getAttribute('data-idx')] = c; });
+  var list = getOrder().map(function (i) { return byIdx[i]; }).filter(Boolean);
+  var el = document.getElementById('search-input');
+  var kw = el ? el.value.trim().toLowerCase() : '';
+  if (kw) list = list.filter(function (c) { return c.textContent.toLowerCase().indexOf(kw) >= 0; });
+  var sel = document.getElementById('sort-select');
+  var sortBy = sel ? sel.value : 'random';
+  if (sortBy === 'wrong') list.sort(function (a, b) { return wrongRate(b) - wrongRate(a); });
+  var visible = {};
+  list.forEach(function (c) { visible[c.getAttribute('data-idx')] = true; });
+  CARDS.forEach(function (c) { c.style.display = visible[c.getAttribute('data-idx')] ? '' : 'none'; });
+  list.forEach(function (c) { GRID.appendChild(c); });
+  var n = 0;
+  list.forEach(function (c) { c.querySelector('.q-num').textContent = ++n; });
+  updateScore();
+}
+window.onStatsReady = applyView;
+
 // 回顶部按钮
 window.addEventListener('scroll', function() {
   var btn = document.getElementById('back-top');
@@ -170,7 +228,8 @@ function toggleAns(btn) {
   updateScore(); save();
 }
 function updateScore() {
-  var total=document.querySelectorAll('.q-card').length;
+  var total=0;
+  document.querySelectorAll('.q-card').forEach(function(c){ if(c.style.display!=='none') total++; });
   document.getElementById('score-pct').textContent=graded?Math.round(correct/graded*100)+'%':'--%';
   document.getElementById('score-ok').textContent='答对 '+correct;
   document.getElementById('score-no').textContent='答错 '+wrong;
@@ -204,8 +263,10 @@ function load() {
   });
   updateScore();
 }
-function clearProgress(){ try{localStorage.removeItem(STORE);}catch(e){} location.reload(); }
+function clearProgress(){ try{localStorage.removeItem(STORE); localStorage.removeItem(ORDER_KEY);}catch(e){} location.reload(); }
+getOrder();
 load();
+applyView();
 </script>
 </body>
 </html>

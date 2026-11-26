@@ -81,6 +81,8 @@
         .catch(function () { return {}; });
     },
 
+    globalData: function () { return (cache && cache.data) || {}; },
+
     rate: function (s) {
       if (!s || !s.a) return '--';
       return Math.round(s.c / s.a * 100) + '%';
@@ -115,7 +117,10 @@
       });
       this.renderUI();
       var self = this;
-      this.global(ids).then(function () { self.renderUI(); });
+      this.global(ids).then(function () {
+        self.renderUI();
+        if (typeof window.onStatsReady === 'function') window.onStatsReady();
+      });
       this.flush();
     }
   };

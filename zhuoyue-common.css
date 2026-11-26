@@ -152,3 +152,13 @@ a { color: #0d47a1; }
 }
 
 .q-stat { font-size: 13px; color: #0d47a1; background: #eaf2ff; border: 1px solid #90caf9; padding: 1px 8px; border-radius: 12px; margin-left: 10px; white-space: normal; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.search-input, .sort-select {
+  font-family: inherit; font-size: 15px; padding: 9px 12px;
+  border-radius: 9px; border: 2px solid #0f3460; background: #fff; color: #16213e;
+}
+.search-input { min-width: 230px; }
+@media (max-width: 900px) {
+  .search-input, .sort-select { width: 100%; }
+}
