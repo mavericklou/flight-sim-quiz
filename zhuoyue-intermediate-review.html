@@ -30,8 +30,9 @@
 <div class="controls">
     <input id="search-input" class="search-input" type="search" placeholder="搜索题目或选项关键词" oninput="applyView()">
     <select id="sort-select" class="sort-select" onchange="applyView()">
-      <option value="random">随机顺序</option>
-      <option value="wrong" title="优先按本机错误率，无本机记录时按全员错误率">错误率（高→低）</option>
+      <option value="random" title="首次进入时生成并保存的题目顺序">默认顺序</option>
+      <option value="local" title="按你本机作答记录的错误率排序，错误率高的在前">本机错误率（高→低）</option>
+      <option value="global" title="按所有用户作答记录的错误率排序，错误率高的在前">全员错误率（高→低）</option>
     </select>
     <button class="btn secondary" onclick="clearProgress()">🗑 清除进度重新开始</button>
   </div>
@@ -159,12 +160,16 @@ function getOrder() {
   }
   return order;
 }
-function wrongRate(card) {
+function wrongRate(card, source) {
   var qid = card.dataset.qid;
-  var l = Stats.local()[qid];
-  if (l && l.a) return 1 - l.c / l.a;
-  var g = Stats.globalData()[qid];
-  if (g && g.a) return 1 - g.c / g.a;
+  if (source === 'local') {
+    var l = Stats.local()[qid];
+    return l && l.a ? 1 - l.c / l.a : 0;
+  }
+  if (source === 'global') {
+    var g = Stats.globalData()[qid];
+    return g && g.a ? 1 - g.c / g.a : 0;
+  }
   return 0;
 }
 function applyView() {
@@ -176,7 +181,9 @@ function applyView() {
   if (kw) list = list.filter(function (c) { return c.textContent.toLowerCase().indexOf(kw) >= 0; });
   var sel = document.getElementById('sort-select');
   var sortBy = sel ? sel.value : 'random';
-  if (sortBy === 'wrong') list.sort(function (a, b) { return wrongRate(b) - wrongRate(a); });
+  if (sortBy === 'local' || sortBy === 'global') {
+    list.sort(function (a, b) { return wrongRate(b, sortBy) - wrongRate(a, sortBy); });
+  }
   var visible = {};
   list.forEach(function (c) { visible[c.getAttribute('data-idx')] = true; });
   CARDS.forEach(function (c) { c.style.display = visible[c.getAttribute('data-idx')] ? '' : 'none'; });
