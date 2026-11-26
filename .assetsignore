@@ -1,0 +1,11 @@
+# Cloudflare Pages 发布时排除以下文件（Git 仓库中仍然保留）
+*.py
+__pycache__/
+worker/
+wrangler.toml
+question_ids.json
+争议题_*.json
+*.md
+*.txt
+*.pdf
+*.json
