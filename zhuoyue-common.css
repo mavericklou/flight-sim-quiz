@@ -150,3 +150,5 @@ a { color: #0d47a1; }
   .score-float .score-detail { font-size: 11px; }
   .back-top { right: 8px; top: 8px; width: 40px; height: 40px; font-size: 18px; }
 }
+
+.q-stat { font-size: 13px; color: #0d47a1; background: #eaf2ff; border: 1px solid #90caf9; padding: 1px 8px; border-radius: 12px; margin-left: 10px; white-space: normal; }

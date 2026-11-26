@@ -1,0 +1,8 @@
+name = "zhuoyue-stats"
+main = "worker/index.js"
+compatibility_date = "2026-11-26"
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "STATS_KV"
+id = "2507d5c3f995482088dfed103a4d6326"
